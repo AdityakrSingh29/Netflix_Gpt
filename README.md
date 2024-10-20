@@ -6,3 +6,7 @@
 -Login Form
 -Signup Form
 -Form Validation and what is UseRef() Hook..
+-FireBaseSetup
+-Deployed our app on production
+-implemented signup and signin
+-Create redux store with userslice

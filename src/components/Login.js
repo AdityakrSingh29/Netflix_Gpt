@@ -1,8 +1,12 @@
 import React, { useState,useRef } from 'react'
 import Header from './Header'
 import { validate } from '../utils/validate';
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword ,updateProfile} from "firebase/auth";
 import { auth } from '../utils/firebase';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
+
 
 
 
@@ -12,6 +16,9 @@ const Login = () => {
   const email=useRef(null);
   const password=useRef(null);
   const [errorMessage,setErrorMessage]=useState(null);
+  const navigate=useNavigate();
+  const name=useRef(null);
+  const dispatch=useDispatch();
 
   const validateForm=()=>{
     //Validation Logic
@@ -26,6 +33,16 @@ const Login = () => {
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
+    //UPDATE-PROFILE
+    updateProfile(user, {
+      displayName: auth.current.value, photoURL: "https://avatars.githubusercontent.com/u/143291559?v=4"
+    }).then(() => {
+      const {uid,email,displayName,photoURL} = auth.currentUser;
+          dispatch(addUser({uid:uid,email:email,displayName:displayName,photoURL:photoURL}));
+    navigate("/Browse");
+    }).catch((error) => {
+      setErrorMessage(error.message);
+    });
     console.log(user);
   })
   .catch((error) => {
@@ -41,6 +58,7 @@ signInWithEmailAndPassword(auth, email.current.value,password.current.value)
     // Signed in 
     const user = userCredential.user;
     console.log(user);
+    navigate("/Browse");
   })
   .catch((error) => {
     const errorCode = error.code;
@@ -67,7 +85,7 @@ signInWithEmailAndPassword(auth, email.current.value,password.current.value)
         {isSignInForm?"Sign In":"Sign Up"}
         </h1>
         { !isSignInForm && 
-          <input type="text" placeholder='Enter Your Full-Name' className='p-4 my-4 w-full bg-gray-800 rounded-md'/>
+          <input ref={name} type="text" placeholder='Enter Your Full-Name' className='p-4 my-4 w-full bg-gray-800 rounded-md'/>
         }
         <input  ref={email} type="text" placeholder='Enter Your Email Address Here..' className='p-4 my-4 w-full bg-gray-800 rounded-md'/>
         <input ref={password} type="password" placeholder='Enter Your Password Here..' className='p-4 my-4 w-full bg-gray-800 rounded-md'/>

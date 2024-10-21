@@ -3,9 +3,9 @@ import Header from './Header'
 import { validate } from '../utils/validate';
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword ,updateProfile} from "firebase/auth";
 import { auth } from '../utils/firebase';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { USER_AVTAR } from '../utils/constants';
 
 
 
@@ -16,7 +16,6 @@ const Login = () => {
   const email=useRef(null);
   const password=useRef(null);
   const [errorMessage,setErrorMessage]=useState(null);
-  const navigate=useNavigate();
   const name=useRef(null);
   const dispatch=useDispatch();
 
@@ -35,15 +34,14 @@ const Login = () => {
     const user = userCredential.user;
     //UPDATE-PROFILE
     updateProfile(user, {
-      displayName: auth.current.value, photoURL: "https://avatars.githubusercontent.com/u/143291559?v=4"
+      displayName: auth.current.value, photoURL:USER_AVTAR,
     }).then(() => {
       const {uid,email,displayName,photoURL} = auth.currentUser;
           dispatch(addUser({uid:uid,email:email,displayName:displayName,photoURL:photoURL}));
-    navigate("/Browse");
     }).catch((error) => {
       setErrorMessage(error.message);
     });
-    console.log(user);
+    // console.log(user);
   })
   .catch((error) => {
     const errorCode = error.code;
@@ -57,8 +55,7 @@ signInWithEmailAndPassword(auth, email.current.value,password.current.value)
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    console.log(user);
-    navigate("/Browse");
+    // console.log(user);
   })
   .catch((error) => {
     const errorCode = error.code;

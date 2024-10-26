@@ -31,6 +31,7 @@
 -Embedde the yt video
 -make it autoplay and mute a
 -Added tailwind css to look aewesome main conatiner
+-Now we willl buid secondary container
 
 
 

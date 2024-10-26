@@ -32,6 +32,10 @@
 -make it autoplay and mute a
 -Added tailwind css to look aewesome main conatiner
 -Now we willl buid secondary container
+-Now we will build gpt page
+-Gpt search page craeted
+-Gpt search bar
+-multi-lang feature in my app(AMAZING_FEATURE)
 
 
 

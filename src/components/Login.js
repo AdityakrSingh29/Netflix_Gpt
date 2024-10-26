@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword,signInWithEmailAndPassword ,updateProfil
 import { auth } from '../utils/firebase';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
-import { USER_AVTAR } from '../utils/constants';
+import { BG_URL, USER_AVTAR } from '../utils/constants';
 
 
 
@@ -73,7 +73,7 @@ signInWithEmailAndPassword(auth, email.current.value,password.current.value)
     <div>
     <Header/>
     <div className='absolute'>
-    <img src="https://assets.nflxext.com/ffe/siteui/vlv3/7c0e18aa-2c95-474d-802e-7f30e75dcca4/web/IN-en-20241014-TRIFECTA-perspective_e7121311-c11e-4809-a3e6-22abffa33569_medium.jpg" 
+    <img src={BG_URL}
     alt="Bg-image"/>
     </div>
     <form onSubmit={(e)=>e.preventDefault()} 
